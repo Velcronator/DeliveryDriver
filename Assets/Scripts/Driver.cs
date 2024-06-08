@@ -7,13 +7,18 @@ public class Driver : MonoBehaviour
     [SerializeField] private float steerSpeed = 1f;
     [SerializeField] private float moveSpeed = 0.01f;
 
+    private Rigidbody2D rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
         float steerAmount = Input.GetAxis("Horizontal") * steerSpeed * Time.deltaTime;
-        // get the vertical axis input
         float moveAmount = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
         transform.Rotate(0, 0, -steerAmount);
-        transform.Translate(0, moveAmount, 0);
+        rb.MovePosition(transform.position + transform.up * moveAmount);
     }
 }
